@@ -1,0 +1,8 @@
+FROM maven:3.8.4-openjdk-17-slim
+WORKDIR /app
+COPY pom.xml .
+COPY product-service/pom.xml ./product-service/
+COPY product-service/src ./product-service/src
+RUN mvn clean package -DskipTests -f product-service/pom.xml
+EXPOSE 8081
+CMD ["mvn", "spring-boot:run", "-f", "product-service/pom.xml"] 

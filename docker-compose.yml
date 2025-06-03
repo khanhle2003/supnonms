@@ -1,0 +1,84 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: supnon_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - supnon-network
+
+  discovery-service:
+    build: 
+      context: .
+      dockerfile: discovery-service/Dockerfile.dev
+    container_name: discovery-service
+    ports:
+      - "8761:8761"
+    volumes:
+      - ./discovery-service:/app/discovery-service
+      - ~/.m2:/root/.m2
+    networks:
+      - supnon-network
+    depends_on:
+      - mysql
+
+  gateway-service:
+    build:
+      context: .
+      dockerfile: gateway-service/Dockerfile.dev
+    container_name: gateway-service
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./gateway-service:/app/gateway-service
+      - ~/.m2:/root/.m2
+    networks:
+      - supnon-network
+    depends_on:
+      - discovery-service
+
+  product-service:
+    build:
+      context: .
+      dockerfile: product-service/Dockerfile.dev
+    container_name: product-service
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./product-service:/app/product-service
+      - ~/.m2:/root/.m2
+    networks:
+      - supnon-network
+    depends_on:
+      - discovery-service
+      - mysql
+
+  order-service:
+    build:
+      context: .
+      dockerfile: order-service/Dockerfile.dev
+    container_name: order-service
+    ports:
+      - "8082:8082"
+    volumes:
+      - ./order-service:/app/order-service
+      - ~/.m2:/root/.m2
+    networks:
+      - supnon-network
+    depends_on:
+      - discovery-service
+      - mysql
+
+networks:
+  supnon-network:
+    driver: bridge
+
+volumes:
+  mysql-data: 

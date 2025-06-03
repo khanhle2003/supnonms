@@ -1,0 +1,8 @@
+FROM maven:3.8.4-openjdk-17-slim
+WORKDIR /app
+COPY pom.xml .
+COPY discovery-service/pom.xml ./discovery-service/
+COPY discovery-service/src ./discovery-service/src
+RUN mvn clean package -DskipTests -f discovery-service/pom.xml
+EXPOSE 8761
+CMD ["mvn", "spring-boot:run", "-f", "discovery-service/pom.xml"] 

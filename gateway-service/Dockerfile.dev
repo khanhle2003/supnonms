@@ -1,0 +1,8 @@
+FROM maven:3.8.4-openjdk-17-slim
+WORKDIR /app
+COPY pom.xml .
+COPY gateway-service/pom.xml ./gateway-service/
+COPY gateway-service/src ./gateway-service/src
+RUN mvn clean package -DskipTests -f gateway-service/pom.xml
+EXPOSE 8080
+CMD ["mvn", "spring-boot:run", "-f", "gateway-service/pom.xml"] 
