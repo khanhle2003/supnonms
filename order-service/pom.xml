@@ -5,14 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.supnon</groupId>
-        <artifactId>supnon-ms</artifactId>
+        <artifactId>supnonms</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>order-service</artifactId>
     <packaging>jar</packaging>
     <name>order-service</name>
-    <description>Order Service for Water Selling Website</description>
+    <description>Order Service for Supnon Microservices</description>
 
     <dependencies>
         <dependency>

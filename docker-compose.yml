@@ -76,6 +76,22 @@ services:
       - discovery-service
       - mysql
 
+  user-service:
+    build:
+      context: .
+      dockerfile: user-service/Dockerfile.dev
+    container_name: user-service
+    ports:
+      - "8083:8083"
+    volumes:
+      - ./user-service:/app/user-service
+      - ~/.m2:/root/.m2
+    networks:
+      - supnon-network
+    depends_on:
+      - discovery-service
+      - mysql
+
 networks:
   supnon-network:
     driver: bridge

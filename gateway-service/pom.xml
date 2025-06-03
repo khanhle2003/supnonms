@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.supnon</groupId>
-        <artifactId>supnon-ms</artifactId>
+        <artifactId>supnonms</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>gateway-service</artifactId>
-    <packaging>jar</packaging>
     <name>gateway-service</name>
-    <description>Gateway Service for Water Selling Website</description>
+    <description>API Gateway Service for Supnon Microservices</description>
 
     <dependencies>
         <dependency>
@@ -30,6 +30,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
